@@ -1,0 +1,113 @@
+<div class="application_container">
+  <div class="container">
+    <div class="heading">
+      <p *ngIf="selection.selected.length <= 0">Application</p>
+      <p *ngIf="selection.selected.length > 0">
+        {{ selection.selected.length }}
+      </p>
+      <div class="icon_actions">
+        <mat-icon
+          *ngIf="selection.selected.length === 0"
+          class="mat-icon notranslate add_icon"
+          aria-hidden="true"
+          (click)="openDialog()"
+        >
+          library_add
+        </mat-icon>
+
+        <div
+          *ngIf="selection.selected.length == 1"
+          class="d-flex align-items-center gap-3"
+        >
+          <mat-icon
+            class="mat-icon notranslate edit_icon"
+            aria-hidden="true"
+            (click)="editOpenDialog(selection.selected[0])"
+            >edit</mat-icon
+          >
+          <mat-icon class="mat-icon notranslate delete_icon" aria-hidden="true"
+            >delete</mat-icon
+          >
+        </div>
+
+        <mat-icon
+          *ngIf="selection.selected.length > 1"
+          class="mat-icon notranslate delete_icon"
+          aria-hidden="true"
+        >
+          delete
+        </mat-icon>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="appId">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.applicationId }}</td>
+      </ng-container>
+      <ng-container matColumnDef="applicationName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="applicationType">
+        <th mat-header-cell *matHeaderCellDef>Application Type</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.applicationType }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="clientId">
+        <th mat-header-cell *matHeaderCellDef>Client ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientID }}</td>
+      </ng-container>
+      <ng-container matColumnDef="secretId">
+        <th mat-header-cell *matHeaderCellDef>Secret ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientSecret }}</td>
+      </ng-container>
+      <ng-container matColumnDef="setting">
+        <th mat-header-cell *matHeaderCellDef>Config</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon
+            class="setting_icon"
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="settings"
+            >{{ element.applicationId }}</mat-icon
+          >
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selection.toggle(row)"
+      ></tr>
+    </table>
+    <mat-paginator
+      class="paginator"
+      [pageSizeOptions]="[10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
+</div>

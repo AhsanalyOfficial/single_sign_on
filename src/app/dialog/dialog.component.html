@@ -1,0 +1,131 @@
+<div class="add_app">
+  <div class="create d-flex justify-content-between align-items-center p-4">
+    <p>{{ data.mode === "edit" ? "Update" : "Create" }}</p>
+    <mat-icon
+      aria-hidden="false"
+      aria-label="Example home icon"
+      fontIcon="close"
+      (click)="closeDialog()"
+      style="cursor: pointer"
+    ></mat-icon>
+  </div>
+  <div class="dialog-cont">
+    <form
+      [formGroup]="applicationForm"
+      (ngSubmit)="addApp()"
+      class="d-flex flex-column gap-2"
+    >
+      <div id="Dform">
+        <mat-form-field id="input-text">
+          <mat-label>Name</mat-label>
+          <input type="text" matInput formControlName="name" />
+          <mat-error
+            *ngIf="
+              applicationForm.get('name')?.hasError('required') &&
+              applicationForm.get('name')?.touched
+            "
+          >
+            Name is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div id="Dform">
+        <mat-form-field id="input-t">
+          <mat-label>HomepageURL</mat-label>
+          <input matInput formControlName="homePageURL" />
+          <mat-error
+            *ngIf="
+              applicationForm.get('homePageURL')?.hasError('required') &&
+              applicationForm.get('homePageURL')?.touched
+            "
+          >
+            HomepageURL is <strong>required.</strong>
+          </mat-error>
+
+          <mat-error
+            *ngIf="
+              !applicationForm.get('homePageURL')?.hasError('required') &&
+              applicationForm.get('homePageURL')?.hasError('invalidUrl') &&
+              applicationForm.get('homePageURL')?.touched
+            "
+          >
+            invalid url
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div id="Dform">
+        <mat-form-field id="input-text">
+          <mat-label>Application Type</mat-label>
+          <mat-select
+            class="option"
+            formControlName="applicationType"
+            disableRipple
+          >
+            <mat-option value="native">Native</mat-option>
+            <mat-option value="single page web Applications"
+              >Single page Web Applications</mat-option
+            >
+            <mat-option value="regular-web"
+              >Regular Web Applications</mat-option
+            >
+            <mat-option value="machine_to_machine"
+              >Machine to Machine Web Applications</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              applicationForm.get('applicationType')?.hasError('required') &&
+              applicationForm.get('applicationType')?.touched
+            "
+          >
+            Application type is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div id="Dform">
+        <mat-form-field id="input-text">
+          <mat-label>Select Authentication Protocol</mat-label>
+          <mat-select
+            class="option"
+            formControlName="authenticationProtocol"
+            disableRipple
+          >
+            <mat-option value="OAuth">OAuth</mat-option>
+            <mat-option value="open_id">Open ID Connect</mat-option>
+            <mat-option value="saml">SAML</mat-option>
+            <mat-option value="password_based"
+              >Password Based no Protocol</mat-option
+            >
+          </mat-select>
+          <mat-error
+            *ngIf="
+              applicationForm
+                .get('authenticationProtocol')
+                ?.hasError('required') &&
+              applicationForm.get('authenticationProtocol')?.touched
+            "
+          >
+            Authentication protocol is <strong>required.</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-dialog-actions class="action">
+        <button
+          mat-button
+          (click)="closeDialog()"
+          style="background-color: #d1d1d1; color: white"
+        >
+          Cancel
+        </button>
+        <button
+          mat-button
+          cdkFocusInitial
+          type="submit"
+          style="background-color: #ffb142; color: white"
+        >
+          {{ data.mode === "edit" ? "Update" : "Create" }}
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+</div>

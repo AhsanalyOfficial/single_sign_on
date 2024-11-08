@@ -1,0 +1,41 @@
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+.sidebar {
+  position: fixed;
+  background-color: rgb(130, 130, 229);
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 50px;
+  height: 100vh;
+  h1 {
+    font-size: 32px;
+    color: white;
+    letter-spacing: 4px;
+    text-shadow: 0.5px 0.5px red;
+  }
+  .menu {
+    ul {
+      padding-top: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      flex-direction: column;
+      li {
+        list-style: none;
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px 40px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        a {
+          text-decoration: none;
+          color: black;
+        }
+      }
+    }
+  }
+}
